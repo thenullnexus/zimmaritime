@@ -12,7 +12,8 @@ export default defineConfig({
   },
   base: '/zimmaritime/',
   build: {
-    outDir: 'dist',
+    outDir: 'docs',
+    emptyOutDir: true,
     assetsDir: 'assets'
   }
 })
