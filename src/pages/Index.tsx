@@ -5,17 +5,20 @@ import Services from '@/components/home/Services';
 import WhyChooseUs from '@/components/home/WhyChooseUs';
 import FocusPorts from '@/components/home/FocusPorts';
 import CTA from '@/components/home/CTA';
-
+import ScrollAnimation from '@/components/home/ScrollAnimation';
 
 const Index = () => {
   return (
     <Layout>
       <Hero />
-      <div className="relative z-10">
-        <Introduction />
-        <Services />
-        <WhyChooseUs />
-        <FocusPorts />
+      <div className="relative">
+        <ScrollAnimation />
+        <div className="relative z-10">
+          <Introduction />
+          <Services />
+          <WhyChooseUs />
+          <FocusPorts />
+        </div>
       </div>
       <CTA />
     </Layout>
