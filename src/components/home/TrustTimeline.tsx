@@ -57,9 +57,10 @@ const TrustTimeline = ({ delay = 0 }: TrustTimelineProps) => {
 
                     {/* Progress Line */}
                     <div
-                        className="absolute left-0 h-1 bg-primary rounded-full transition-all duration-[1500ms] ease-out"
+                        className="absolute left-0 h-1 bg-primary rounded-full transition-all ease-out"
                         style={{
                             width: isVisible ? '100%' : '0%',
+                            transitionDuration: '1500ms',
                             transitionDelay: `${delay + 0.3}s`
                         }}
                     />
