@@ -17,7 +17,7 @@ const ScrollAnimation = () => {
             for (let i = 1; i <= FRAME_COUNT; i++) {
                 const img = new Image();
                 const frameNumber = i.toString().padStart(3, '0');
-                img.src = `/src/assets/home_page_animation/ezgif-frame-${frameNumber}.jpg`;
+                img.src = `${import.meta.env.BASE_URL}home_page_animation/ezgif-frame-${frameNumber}.jpg`;
                 img.onload = () => {
                     count++;
                     setLoadedCount(count);
