@@ -156,9 +156,8 @@ const ParallaxServiceSection = ({ service, isMobile }: { service: any, isMobile:
   // Sequenced Animation Logic
   // 1. Heading entry: 0.0 -> 0.2
   const headingStep = useTransform(smoothProgress, [0, 0.2], [0, 1]);
-  const headingScale = useTransform(smoothProgress, [0, 0.2], [0.5, 1.0]);
-  const headingOpacity = headingStep;
   const headingEntryY = useTransform(smoothProgress, [0, 0.2], [50, 0]);
+  const headingOpacity = headingStep;
 
   // 2. Image entry: 0.1 -> 0.4
   const imageStep = useTransform(smoothProgress, [0.1, 0.4], [0, 1]);
@@ -179,8 +178,8 @@ const ParallaxServiceSection = ({ service, isMobile }: { service: any, isMobile:
   const Icon = service.icon;
 
   return (
-    <div id={service.id} ref={sectionRef} className="relative bg-[#020617]" style={{ height: isMobile ? '200vh' : '300vh' }}>
-      <div className="sticky top-0 h-screen overflow-hidden">
+    <div id={service.id} ref={sectionRef} className="relative bg-[#020617] will-change-transform" style={{ height: isMobile ? '200vh' : '300vh' }}>
+      <div className="sticky top-0 h-screen overflow-hidden will-change-contents">
         {/* Cinematic Background Layering */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <motion.div
@@ -300,7 +299,7 @@ const ParallaxServiceSection = ({ service, isMobile }: { service: any, isMobile:
                     <img
                       src={service.image}
                       alt={service.title}
-                      className="w-full h-full object-contain opacity-95 transition-transform duration-700 group-hover/img:scale-110 bg-black/50"
+                      className="w-full h-full object-contain opacity-95 transition-transform duration-700 group-hover/img:scale-110 bg-black/50 will-change-transform"
                     />
                     {/* Technical Overlay under Image */}
                     <div className="absolute inset-0 bg-gradient-to-t from-[#020617]/40 via-transparent to-transparent opacity-60 pointer-events-none rounded-3xl" />
@@ -327,12 +326,11 @@ const ParallaxServiceSection = ({ service, isMobile }: { service: any, isMobile:
                     style={{
                       fontSize: 'clamp(2.5rem, 10vw, 15rem)',
                       lineHeight: '0.8',
-                      opacity: useTransform(headingOpacity, o => 0.03 + (o * 0.05)),
+                      opacity: useTransform(headingOpacity, (o: any) => 0.03 + (Number(o) * 0.05)),
                       textShadow: '0 0 120px rgba(1, 78, 34, 0.4)',
                       y: useTransform(headingEntryY, y => `${y}vh`),
-                      scale: headingScale,
                       transformOrigin: 'center center',
-                      filter: useTransform(headingOpacity, o => `blur(${Math.max(0, (1 - o) * 20)}px)`),
+                      willChange: 'transform, opacity',
                     }}
                   >
                     {service.title}
@@ -342,7 +340,8 @@ const ParallaxServiceSection = ({ service, isMobile }: { service: any, isMobile:
                     className="mt-8 max-w-xl flex flex-col items-start text-left pointer-events-auto bg-white/[0.02] backdrop-blur-[50px] border border-white/10 py-8 px-10 rounded-[2.5rem] shadow-2xl relative overflow-hidden group/card"
                     style={{
                       opacity: contentStep,
-                      boxShadow: `0 40px 120px -20px rgba(0,0,0,0.6), 0 0 50px -12px ${service.glowColor}, inset 0 0 20px rgba(255,255,255,0.02)`
+                      boxShadow: `0 40px 120px -20px rgba(0,0,0,0.6), 0 0 50px -12px ${service.glowColor}, inset 0 0 20px rgba(255,255,255,0.02)`,
+                      willChange: 'transform, opacity',
                     }}
                   >
                     {/* Subtle Technical Grid on Card */}
