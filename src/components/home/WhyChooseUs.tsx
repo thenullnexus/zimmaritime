@@ -31,7 +31,7 @@ const WhyChooseUs = () => {
           <div className="animate-fade-up">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 mb-6">
               <span className="w-2 h-2 rounded-full bg-primary animate-ping" />
-              <p className="text-primary font-semibold uppercase tracking-widest text-[10px]">Why Choose Us</p>
+              <p className="text-primary font-semibold uppercase tracking-widest text-sm">Why Choose Us</p>
             </div>
 
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-8 leading-[1.1] text-glow">
@@ -80,7 +80,7 @@ const WhyChooseUs = () => {
                   <div className="text-4xl sm:text-5xl font-bold text-white mb-2 tracking-tighter">
                     {stat.value}
                   </div>
-                  <div className="text-white/50 text-xs font-semibold uppercase tracking-[0.2em]">
+                  <div className="text-white/50 text-sm font-semibold uppercase tracking-[0.2em]">
                     {stat.label}
                   </div>
                 </div>

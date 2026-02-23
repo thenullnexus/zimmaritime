@@ -14,13 +14,12 @@ import {
   Sparkles
 } from 'lucide-react';
 
-// Import Service Images (Localized Assets)
 import vesselFixingImg from '@/assets/vessel-fixing.png';
-import shipCharteringImg from '@/assets/ship-chartering.png';
+import shipCharteringImg from '@/assets/cha-stevedoring.png';
 import shipBrokeringImg from '@/assets/ship-brokering.png';
 import portLogisticsImg from '@/assets/port-logistics.png';
 import surfaceTransportationImg from '@/assets/surface-transportation.png';
-import chaStevedoringImg from '@/assets/cha-stevedoring.png';
+import chaStevedoringImg from '@/assets/chs-steve.png';
 
 const servicesData = [
   {
@@ -180,12 +179,12 @@ const ParallaxServiceSection = ({ service, isMobile }: { service: any, isMobile:
   const Icon = service.icon;
 
   return (
-    <div ref={sectionRef} className="relative bg-[#020617]" style={{ height: '300vh' }}>
+    <div id={service.id} ref={sectionRef} className="relative bg-[#020617]" style={{ height: isMobile ? '200vh' : '300vh' }}>
       <div className="sticky top-0 h-screen overflow-hidden">
         {/* Cinematic Background Layering */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
           <motion.div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full blur-[160px]"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] md:w-[800px] h-[400px] md:h-[800px] rounded-full blur-[160px]"
             style={{
               backgroundColor: service.glowColor,
               opacity: glowPulse
@@ -210,122 +209,204 @@ const ParallaxServiceSection = ({ service, isMobile }: { service: any, isMobile:
             y: exitY
           }}
         >
-          {/* Image Component */}
-          <motion.div
-            className="absolute inset-0 flex items-center justify-end pr-8 sm:pr-20 pointer-events-none"
-            style={{
-              x: useTransform(imageEntryX, x => `${x}%`),
-              zIndex: 30
-            }}
-          >
-            <div className="relative group/img h-full flex items-center justify-center rounded-[50px] overflow-hidden">
-              <img
-                src={service.image}
-                alt={service.title}
-                className="w-[90vw] sm:w-[75vw] md:w-[45vw] h-auto max-h-[35vh] md:max-h-[55vh] object-contain opacity-95 transition-transform duration-700 group-hover/img:scale-110 drop-shadow-[0_20px_60px_rgba(0,0,0,0.8)]"
-              />
-              {/* Image Technical Details (Placeholder Specs) */}
-              <div className="absolute bottom-4 right-4 flex flex-col items-end opacity-20 group-hover/img:opacity-40 transition-opacity">
-                <span className="text-[10px] text-white font-mono uppercase tracking-[0.2em]">Scale: 1:500</span>
-                <span className="text-[10px] text-white font-mono uppercase tracking-[0.2em]">Coord: 44.2°N 12.3°E</span>
-              </div>
-              {/* Technical Overlay under Image */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#020617]/40 via-transparent to-transparent opacity-60 pointer-events-none" />
-            </div>
-          </motion.div>
-
-          {/* Heading and Content */}
-          <motion.div
-            className="absolute inset-0 flex items-center justify-start pointer-events-none z-40"
-            style={{
-              paddingLeft: isMobile ? '0' : '8vw',
-              x: useTransform(contentEntryX, x => `${x}vw`),
-            }}
-          >
-            <div className="flex flex-col items-center sm:items-start px-0 sm:px-12 text-center sm:text-left">
-              <motion.h2
-                className="font-serif font-black uppercase tracking-tighter whitespace-nowrap text-white select-none pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 sm:static sm:translate-x-0"
-                style={{
-                  fontSize: isMobile ? 'clamp(1rem, 6vw, 2rem)' : 'clamp(2.5rem, 10vw, 15rem)',
-                  lineHeight: '0.8',
-                  opacity: useTransform(headingOpacity, o => 0.03 + (o * 0.05)),
-                  textShadow: '0 0 120px rgba(1, 78, 34, 0.4)',
-                  y: useTransform(headingEntryY, y => `${y}vh`),
-                  scale: headingScale,
-                  transformOrigin: 'center center',
-                  filter: useTransform(headingOpacity, o => `blur(${Math.max(0, (1 - o) * 20)}px)`),
-                }}
-              >
-                {service.title}
-              </motion.h2>
-
+          {/* MOBILE LAYOUT: Stacked vertically */}
+          {isMobile ? (
+            <div className="flex flex-col h-full pt-16 px-4">
+              {/* Mobile Image */}
               <motion.div
-                className="mt-6 sm:mt-8 max-w-[90vw] sm:max-w-xl flex flex-col items-center sm:items-start text-center sm:text-left pointer-events-auto bg-white/[0.02] backdrop-blur-[50px] border border-white/10 py-6 sm:py-8 px-6 sm:px-10 rounded-[2.5rem] shadow-2xl relative overflow-hidden group/card"
+                className="flex-shrink-0 flex items-center justify-center mb-4 pt-10"
                 style={{
-                  opacity: contentStep,
-                  boxShadow: `0 40px 120px -20px rgba(0,0,0,0.6), 0 0 50px -12px ${service.glowColor}, inset 0 0 20px rgba(255,255,255,0.02)`
+                  opacity: imageStep,
+                  y: useTransform(smoothProgress, [0.1, 0.4], [40, 0]),
                 }}
               >
-                {/* Subtle Technical Grid on Card */}
-                <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px]" />
-
-                {/* Grain/Noise Overlay */}
-                <div className="absolute inset-0 opacity-[0.02] pointer-events-none mix-blend-overlay" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }} />
-
-                {/* Subtle Card Glow Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-1000 pointer-events-none" />
-
-                {/* Corner Accent */}
-                <div className="absolute top-0 right-0 w-16 h-16 pointer-events-none overflow-hidden">
-                  <div className="absolute top-2 right-2 w-10 h-[1px] bg-primary/30" />
-                  <div className="absolute top-2 right-2 w-[1px] h-10 bg-primary/30" />
+                <div className="w-48 aspect-square rounded-2xl overflow-hidden drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)]">
+                  <img
+                    src={service.image}
+                    alt={service.title}
+                    className="w-full h-full object-contain bg-black/50"
+                  />
                 </div>
-                <div className="flex flex-col items-center sm:items-start gap-3 mb-6">
-                  <div className="w-14 h-14 rounded-2xl bg-primary/20 flex items-center justify-center border border-primary/30 shadow-lg group">
-                    <Icon className={`w-7 h-7 text-primary transition-transform duration-500 group-hover:scale-110`} strokeWidth={1.5} />
+              </motion.div>
+
+              {/* Mobile Content Card */}
+              <motion.div
+                className="flex-1 overflow-y-auto pointer-events-auto"
+                style={{ opacity: contentStep }}
+              >
+                <div
+                  className="bg-white/[0.02] backdrop-blur-[50px] border border-white/10 py-5 px-5 rounded-[1.5rem] shadow-2xl relative overflow-hidden"
+                  style={{
+                    boxShadow: `0 20px 60px -10px rgba(0,0,0,0.6), 0 0 30px -8px ${service.glowColor}, inset 0 0 20px rgba(255,255,255,0.02)`
+                  }}
+                >
+                  {/* Card overlays */}
+                  <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px]" />
+
+                  {/* Icon + Title */}
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center border border-primary/30 shadow-lg flex-shrink-0">
+                      <Icon className="w-5 h-5 text-primary" strokeWidth={1.5} />
+                    </div>
+                    <div>
+                      <span className="text-primary font-bold uppercase tracking-[0.2em] text-xs flex items-center gap-1.5">
+                        <Sparkles className="w-2.5 h-2.5 animate-pulse" />
+                        Premium Logistics
+                      </span>
+                      <span className="text-white font-serif italic text-sm opacity-80">Strategic Excellence</span>
+                    </div>
                   </div>
-                  <div className="flex flex-col items-center sm:items-start">
-                    <span className="text-primary font-bold uppercase tracking-[0.3em] text-[10px] sm:text-xs mb-1 flex items-center gap-2">
-                      <Sparkles className="w-3 h-3 animate-pulse" />
-                      Premium Logistics
-                    </span>
-                    <span className="text-white font-serif italic text-base opacity-80">Strategic Excellence</span>
-                  </div>
-                </div>
 
-                <p className="text-white/80 text-lg sm:text-xl mb-6 leading-relaxed font-light italic relative">
-                  {service.description}
-                </p>
+                  <p className="text-white/80 text-sm mb-4 leading-relaxed font-light italic">
+                    {service.description}
+                  </p>
 
-                <div className="w-full h-[1px] bg-gradient-to-r from-primary/40 via-white/10 to-transparent mb-7" />
+                  <div className="w-full h-[1px] bg-gradient-to-r from-primary/40 via-white/10 to-transparent mb-4" />
 
-                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-8 w-full max-w-md mx-auto sm:mx-0">
-                  {service.features.map((feature: string, idx: number) => (
-                    <FeatureItem
-                      key={idx}
-                      feature={feature}
-                      index={idx}
-                      scrollProgress={contentStep}
-                    />
-                  ))}
-                </ul>
+                  <ul className="grid grid-cols-1 gap-2 mb-5">
+                    {service.features.map((feature: string, idx: number) => (
+                      <li key={idx} className="flex items-center gap-3">
+                        <div className="w-4 h-4 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0 border border-primary/20">
+                          <Check className="w-2 h-2 text-primary" />
+                        </div>
+                        <span className="text-white/70 text-xs font-light">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
 
-                <motion.div style={{
-                  opacity: useTransform(contentStep, [0.6, 1], [0, 1]),
-                  y: useTransform(contentStep, [0.6, 1], [20, 0]),
-                }}>
                   <Link
                     to="/contact"
-                    className="group relative inline-flex items-center gap-4 px-10 py-5 bg-primary text-white rounded-full text-sm font-bold overflow-hidden transition-all hover:scale-105 hover:shadow-2xl hover:shadow-primary/40 shadow-xl shadow-primary/20"
+                    className="group relative inline-flex items-center gap-3 px-6 py-3 bg-primary text-white rounded-full text-xs font-bold overflow-hidden transition-all hover:scale-105 shadow-lg shadow-primary/20"
                   >
-                    <span className="relative z-10">Request Strategic Quote</span>
-                    <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                    <span className="relative z-10">Request Quote</span>
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </Link>
-                </motion.div>
+                </div>
               </motion.div>
             </div>
-          </motion.div>
+          ) : (
+            /* DESKTOP LAYOUT: Original side-by-side parallax */
+            <>
+              {/* Image Component */}
+              <motion.div
+                className="absolute inset-0 flex items-end justify-end pr-20 pb-20 pointer-events-none"
+                style={{
+                  x: useTransform(imageEntryX, x => `${x}%`),
+                  zIndex: 30
+                }}
+              >
+                <div className="relative group/img flex items-center justify-center">
+                  <div className="w-[30vw] aspect-square rounded-3xl overflow-hidden drop-shadow-[0_20px_60px_rgba(0,0,0,0.8)]">
+                    <img
+                      src={service.image}
+                      alt={service.title}
+                      className="w-full h-full object-contain opacity-95 transition-transform duration-700 group-hover/img:scale-110 bg-black/50"
+                    />
+                    {/* Technical Overlay under Image */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#020617]/40 via-transparent to-transparent opacity-60 pointer-events-none rounded-3xl" />
+                  </div>
+                  {/* Image Technical Details */}
+                  <div className="absolute bottom-1 right-4 flex flex-col items-end opacity-20 group-hover/img:opacity-40 transition-opacity">
+                    <span className="text-xs text-white font-mono uppercase tracking-[0.2em]">Scale: 1:500</span>
+                    <span className="text-xs text-white font-mono uppercase tracking-[0.2em]">Coord: 44.2°N 12.3°E</span>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Heading and Content */}
+              <motion.div
+                className="absolute inset-0 flex items-center justify-start pointer-events-none z-40"
+                style={{
+                  paddingLeft: '8vw',
+                  x: useTransform(contentEntryX, x => `${x}vw`),
+                }}
+              >
+                <div className="flex flex-col items-start px-12 text-left">
+                  <motion.h2
+                    className="font-serif font-black uppercase tracking-tighter whitespace-nowrap text-white select-none pointer-events-none"
+                    style={{
+                      fontSize: 'clamp(2.5rem, 10vw, 15rem)',
+                      lineHeight: '0.8',
+                      opacity: useTransform(headingOpacity, o => 0.03 + (o * 0.05)),
+                      textShadow: '0 0 120px rgba(1, 78, 34, 0.4)',
+                      y: useTransform(headingEntryY, y => `${y}vh`),
+                      scale: headingScale,
+                      transformOrigin: 'center center',
+                      filter: useTransform(headingOpacity, o => `blur(${Math.max(0, (1 - o) * 20)}px)`),
+                    }}
+                  >
+                    {service.title}
+                  </motion.h2>
+
+                  <motion.div
+                    className="mt-8 max-w-xl flex flex-col items-start text-left pointer-events-auto bg-white/[0.02] backdrop-blur-[50px] border border-white/10 py-8 px-10 rounded-[2.5rem] shadow-2xl relative overflow-hidden group/card"
+                    style={{
+                      opacity: contentStep,
+                      boxShadow: `0 40px 120px -20px rgba(0,0,0,0.6), 0 0 50px -12px ${service.glowColor}, inset 0 0 20px rgba(255,255,255,0.02)`
+                    }}
+                  >
+                    {/* Subtle Technical Grid on Card */}
+                    <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px]" />
+
+                    {/* Grain/Noise Overlay */}
+                    <div className="absolute inset-0 opacity-[0.02] pointer-events-none mix-blend-overlay" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }} />
+
+                    {/* Subtle Card Glow Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-1000 pointer-events-none" />
+
+                    {/* Corner Accent */}
+                    <div className="absolute top-0 right-0 w-16 h-16 pointer-events-none overflow-hidden">
+                      <div className="absolute top-2 right-2 w-10 h-[1px] bg-primary/30" />
+                      <div className="absolute top-2 right-2 w-[1px] h-10 bg-primary/30" />
+                    </div>
+                    <div className="flex flex-col items-start gap-3 mb-6">
+                      <div className="w-14 h-14 rounded-2xl bg-primary/20 flex items-center justify-center border border-primary/30 shadow-lg group">
+                        <Icon className={`w-7 h-7 text-primary transition-transform duration-500 group-hover:scale-110`} strokeWidth={1.5} />
+                      </div>
+                      <div className="flex flex-col items-start">
+                        <span className="text-primary font-bold uppercase tracking-[0.3em] text-sm mb-1 flex items-center gap-2">
+                          <Sparkles className="w-3 h-3 animate-pulse" />
+                          Premium Logistics
+                        </span>
+                        <span className="text-white font-serif italic text-base opacity-80">Strategic Excellence</span>
+                      </div>
+                    </div>
+
+                    <p className="text-white/80 text-xl mb-6 leading-relaxed font-light italic relative">
+                      {service.description}
+                    </p>
+
+                    <div className="w-full h-[1px] bg-gradient-to-r from-primary/40 via-white/10 to-transparent mb-7" />
+
+                    <ul className="grid grid-cols-2 gap-4 mb-8 w-full max-w-md">
+                      {service.features.map((feature: string, idx: number) => (
+                        <FeatureItem
+                          key={idx}
+                          feature={feature}
+                          index={idx}
+                          scrollProgress={contentStep}
+                        />
+                      ))}
+                    </ul>
+
+                    <motion.div style={{
+                      opacity: useTransform(contentStep, [0.6, 1], [0, 1]),
+                      y: useTransform(contentStep, [0.6, 1], [20, 0]),
+                    }}>
+                      <Link
+                        to="/contact"
+                        className="group relative inline-flex items-center gap-4 px-10 py-5 bg-primary text-white rounded-full text-sm font-bold overflow-hidden transition-all hover:scale-105 hover:shadow-2xl hover:shadow-primary/40 shadow-xl shadow-primary/20"
+                      >
+                        <span className="relative z-10">Request Strategic Quote</span>
+                        <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+                        <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                      </Link>
+                    </motion.div>
+                  </motion.div>
+                </div>
+              </motion.div>
+            </>
+          )}
         </motion.div>
       </div>
     </div>
@@ -361,7 +442,7 @@ const ServicesPage = () => {
               className="flex items-center gap-4 mb-8"
             >
               <div className="h-[2px] w-16 bg-primary" />
-              <p className="text-primary font-bold uppercase tracking-[0.5em] text-xs">Our Enterprise Solutions</p>
+              <p className="text-primary font-bold uppercase tracking-[0.5em] text-sm">Our Enterprise Solutions</p>
             </motion.div>
 
             <h1 className="font-serif text-6xl md:text-8xl font-bold text-premium text-glow mb-10 leading-[0.85] tracking-tighter">

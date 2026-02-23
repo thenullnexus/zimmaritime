@@ -1,8 +1,18 @@
 import { useEffect, useState } from 'react';
+import { useCountUp } from '../../hooks/use-count-up';
 
 interface GlobalReachMapProps {
     delay?: number;
 }
+
+const StatDisplay = ({ value }: { value: string }) => {
+    const { count, ref } = useCountUp(parseInt(value.replace(/[^0-9]/g, '')), 2000);
+    return (
+        <span ref={ref} className="text-4xl font-bold text-primary tabular-nums">
+            {count}{value.includes('+') ? '+' : ''}
+        </span>
+    );
+};
 
 const GlobalReachMap = ({ delay = 0 }: GlobalReachMapProps) => {
     const [activeLines, setActiveLines] = useState<number[]>([]);
@@ -130,9 +140,7 @@ const GlobalReachMap = ({ delay = 0 }: GlobalReachMapProps) => {
 
                 {/* Hero Number */}
                 <div className="flex items-baseline gap-2 mb-4">
-                    <span className="text-4xl font-bold text-primary tabular-nums">
-                        12+
-                    </span>
+                    <StatDisplay value="12+" />
                     <span className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
                         Hubs
                     </span>

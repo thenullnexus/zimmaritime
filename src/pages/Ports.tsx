@@ -1,11 +1,33 @@
 import { useRef } from 'react';
 import Layout from '@/components/layout/Layout';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { MapPin, ArrowRight, Anchor, Globe, Ship } from 'lucide-react';
+import { MapPin, ArrowRight, Anchor, Globe, Ship, Sparkles } from 'lucide-react';
 import WorldMap from '@/components/ports/WorldMap';
+import { useCountUp } from '@/hooks/use-count-up';
+
+const StatCounter = ({ value, className }: { value: string, className?: string }) => {
+  const numericMatch = value.match(/(\d+(?:\.\d+)?)/);
+  if (!numericMatch) return <span className={className}>{value}</span>;
+
+  const numericValue = parseFloat(numericMatch[0]);
+  const parts = value.split(numericMatch[0]);
+  const prefix = parts[0];
+  const suffix = parts[1];
+
+  const { count, ref } = useCountUp(numericValue, 2000);
+
+  const isDecimal = numericMatch[0].includes('.');
+  const displayCount = (isDecimal && count === Math.floor(numericValue)) ? numericMatch[0] : count;
+
+  return (
+    <span ref={ref} className={className}>
+      {prefix}{displayCount}{suffix}
+    </span>
+  );
+};
 
 // Import Assets
-import heroVideo from '@/assets/hero-background.mp4';
+import heroVideo from '@/assets/global-net.mp4';
 import indiaImg from '@/assets/india.png';
 import persianImg from '@/assets/persian.png';
 import southAsiaImg from '@/assets/south-asia.png';
@@ -36,7 +58,8 @@ const Ports = () => {
         { name: 'Kolkata/Haldia', type: 'Major Port' },
       ],
       image: indiaImg,
-      color: 'from-blue-600 to-indigo-600'
+      color: 'blue-500',
+      glowColor: 'rgba(59, 130, 246, 0.15)'
     },
     {
       id: 'persian',
@@ -55,7 +78,8 @@ const Ports = () => {
         { name: 'Bandar Abbas', type: 'Major Port' },
       ],
       image: persianImg,
-      color: 'from-amber-600 to-orange-600'
+      color: 'amber-500',
+      glowColor: 'rgba(245, 158, 11, 0.15)'
     },
     {
       id: 'southeast',
@@ -74,7 +98,8 @@ const Ports = () => {
         { name: 'Penang', type: 'Regional Port' },
       ],
       image: southAsiaImg,
-      color: 'from-emerald-600 to-teal-600'
+      color: 'emerald-500',
+      glowColor: 'rgba(16, 185, 129, 0.15)'
     },
     {
       id: 'emerging',
@@ -91,71 +116,81 @@ const Ports = () => {
         { name: 'Cai Mep', type: 'Deep Water' },
       ],
       image: maldivesImg,
-      color: 'from-violet-600 to-purple-600'
+      color: 'indigo-500',
+      glowColor: 'rgba(99, 102, 241, 0.15)'
     },
   ];
 
   return (
     <Layout>
-      <div className="bg-slate-900 min-h-screen">
+      <div className="bg-[#020617] min-h-screen">
+        {/* Cinematic Background Elements (Shared with other premium pages) */}
+        <div className="fixed inset-0 z-0 pointer-events-none">
+          <div className="absolute top-0 right-0 w-1/2 h-full bg-primary/5 rounded-full blur-[180px]" />
+          <div className="absolute bottom-0 left-0 w-1/2 h-full bg-blue-600/5 rounded-full blur-[180px]" />
+          <div className="absolute inset-0 bg-[radial-gradient(#ffffff03_1px,transparent_1px)] [background-size:40px_40px]" />
+        </div>
 
         {/* Hero Section with Video Background */}
-        <section className="relative h-[90vh] flex items-center justify-center overflow-hidden">
+        <section className="relative pt-44 pb-32 overflow-hidden bg-[#020617]">
+          {/* Subtle Video Background Layer */}
           <div className="absolute inset-0 z-0">
-            <div className="absolute inset-0 bg-slate-900/40 z-10" />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent z-10" />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#020617] via-[#020617]/40 to-[#020617] z-10" />
             <video
               autoPlay
               loop
               muted
               playsInline
-              className="w-full h-full object-cover opacity-60"
+              className="w-full h-full object-cover opacity-40"
             >
               <source src={heroVideo} type="video/mp4" />
             </video>
           </div>
 
-          <div className="container mx-auto px-4 relative z-20 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: "outCirc" }}
-            >
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 mb-6 mx-auto">
-                <Globe className="w-4 h-4 text-blue-400" />
-                <span className="text-sm font-medium text-blue-100">Global Maritime Network</span>
-              </div>
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-20 text-left">
+            <div className="max-w-4xl">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="flex items-center gap-4 mb-8"
+              >
+                <div className="h-[2px] w-16 bg-primary" />
+                <p className="text-primary font-bold uppercase tracking-[0.5em] text-xs">Global Maritime Network</p>
+              </motion.div>
 
-              <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 tracking-tight leading-tight">
-                Beyond <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">Borders</span>
+              <h1 className="font-serif text-6xl md:text-8xl font-bold text-premium text-glow mb-10 leading-[0.85] tracking-tighter">
+                Strategic <br />
+                <span className="text-white">Global Reach</span>
               </h1>
 
-              <p className="text-lg md:text-2xl text-slate-300 max-w-3xl mx-auto leading-relaxed mb-10">
-                Seamlessly connecting India to the Persian Gulf, Southeast Asia, and beyond with our extensive fleet and strategic partnerships.
+              <p className="text-white/40 text-xl md:text-3xl leading-relaxed max-w-2xl font-light italic mb-12">
+                Seamlessly connecting continents through our extensive port network
+                and deep-sea operational expertise.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div className="flex flex-col sm:flex-row gap-6">
                 <button
                   onClick={() => document.getElementById('world-map')?.scrollIntoView({ behavior: 'smooth' })}
-                  className="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-medium transition-all transform hover:scale-105 shadow-[0_0_20px_rgba(37,99,235,0.3)] flex items-center justify-center gap-2"
+                  className="group relative inline-flex items-center gap-4 px-10 py-5 bg-primary text-white rounded-full text-sm font-bold overflow-hidden transition-all hover:scale-105 shadow-xl shadow-primary/20"
                 >
-                  View Network
-                  <ArrowRight className="w-5 h-5" />
+                  <span className="relative z-10">Explore Network Map</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+                  <Globe className="w-5 h-5 group-hover:rotate-12 transition-transform" />
                 </button>
               </div>
-            </motion.div>
+            </div>
           </div>
         </section>
 
-        {/* Global Stats Section - Glassmorphism */}
-        <section className="relative -mt-20 z-30 pb-20">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
+        {/* Global Stats Section - Premium Glassmorphism */}
+        <section className="relative -mt-20 z-30 pb-32">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
               {[
-                { label: "Active Regions", value: "4", icon: Globe },
-                { label: "Major Ports", value: "30+", icon: MapPin },
-                { label: "Vessels Deployed", value: "12+", icon: Ship },
-                { label: "Operations", value: "24/7", icon: Anchor },
+                { label: "Active Regions", value: "4", icon: Globe, color: "text-blue-500" },
+                { label: "Major Ports", value: "30+", icon: MapPin, color: "text-primary" },
+                { label: "Vessels Deployed", value: "12+", icon: Ship, color: "text-indigo-500" },
+                { label: "Operations", value: "24/7", icon: Anchor, color: "text-emerald-500" },
               ].map((stat, index) => (
                 <motion.div
                   key={index}
@@ -163,11 +198,18 @@ const Ports = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="bg-slate-800/50 backdrop-blur-xl border border-white/10 p-6 md:p-8 rounded-2xl shadow-xl hover:bg-slate-800/70 transition-colors group"
+                  className="bg-white/[0.02] backdrop-blur-[50px] border border-white/10 p-8 rounded-[2rem] shadow-2xl relative overflow-hidden group hover:bg-white/[0.05] transition-all duration-500"
                 >
-                  <stat.icon className="w-8 h-8 text-blue-500 mb-4 group-hover:scale-110 transition-transform" />
-                  <div className="text-4xl md:text-5xl font-bold text-white mb-2">{stat.value}</div>
-                  <div className="text-slate-400 text-sm font-medium uppercase tracking-wider">{stat.label}</div>
+                  <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px]" />
+                  <stat.icon className={`w-8 h-8 ${stat.color} mb-6 group-hover:scale-110 transition-transform duration-500`} strokeWidth={1.5} />
+                  <div className="text-5xl font-bold text-white mb-2 font-serif">
+                    {stat.value.match(/\d+/) ? (
+                      <StatCounter value={stat.value} />
+                    ) : (
+                      stat.value
+                    )}
+                  </div>
+                  <div className="text-white/40 text-xs font-bold uppercase tracking-[0.2em]">{stat.label}</div>
                 </motion.div>
               ))}
             </div>
@@ -175,77 +217,90 @@ const Ports = () => {
         </section>
 
         {/* World Map Component */}
-        <div id="world-map">
+        <div id="world-map" className="relative z-10 bg-[#020617] border-y border-white/5 py-32">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 mb-20 text-center">
+            <Sparkles className="w-8 h-8 text-primary mx-auto mb-6 animate-pulse" />
+            <h2 className="font-serif text-5xl md:text-7xl font-bold text-premium mb-8 text-glow tracking-tighter">Strategic Coverage</h2>
+            <p className="text-white/40 text-xl font-light italic max-w-2xl mx-auto">Visualizing our maritime dominance across strategic global trade corridors.</p>
+          </div>
           <WorldMap />
         </div>
 
         {/* Interactive Region Showcase */}
-        <section className="py-24 bg-slate-900 overflow-hidden" ref={containerRef}>
-          <div className="container mx-auto px-4">
-            <div className="mb-16">
-              <h2 className="font-serif text-4xl md:text-5xl font-bold text-white mb-6">Regional Focus</h2>
-              <div className="h-1 w-24 bg-blue-500 rounded-full" />
+        <section className="py-32 bg-[#020617] relative overflow-hidden" ref={containerRef}>
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="mb-24 flex flex-col items-start">
+              <div className="h-[2px] w-16 bg-primary mb-8" />
+              <h2 className="font-serif text-5xl md:text-7xl font-bold text-premium text-glow tracking-tighter">Regional Focus</h2>
             </div>
 
-            <div className="space-y-32">
+            <div className="space-y-48">
               {regions.map((region, index) => (
                 <motion.div
-                  initial={{ opacity: 0, y: 40 }}
+                  initial={{ opacity: 0, y: 60 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.7 }}
+                  transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
                   key={region.id}
-                  className={`flex flex-col lg:flex-row gap-12 lg:gap-20 items-center ${index % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}
+                  className={`flex flex-col lg:flex-row gap-20 lg:gap-32 items-center ${index % 2 === 1 ? 'lg:flex-row-reverse' : ''}`}
                 >
                   {/* Text Content */}
-                  <div className="flex-1 space-y-8">
-                    <div className={`inline-block px-3 py-1 rounded bg-gradient-to-r ${region.color} text-white text-xs font-bold uppercase tracking-wider`}>
-                      {region.highlight}
+                  <div className="flex-1 space-y-10">
+                    <div className="flex flex-col gap-4">
+                      <span className="text-primary font-bold uppercase tracking-[0.3em] text-xs flex items-center gap-2">
+                        <Sparkles className="w-3 h-3 animate-pulse" />
+                        {region.highlight}
+                      </span>
+                      <h3 className="font-serif text-5xl md:text-6xl font-bold text-white tracking-tighter">
+                        {region.name}
+                      </h3>
                     </div>
 
-                    <h3 className="font-serif text-4xl md:text-5xl font-bold text-slate-100">
-                      {region.name}
-                    </h3>
-
-                    <p className="text-xl text-slate-400 leading-relaxed font-light">
+                    <p className="text-xl text-white/50 leading-relaxed font-light italic">
                       {region.description}
                     </p>
 
-                    <div className="grid grid-cols-2 gap-6 py-6 border-y border-white/5">
-                      <div className="space-y-1">
-                        <div className="text-2xl font-bold text-white">{region.stats.ports}</div>
-                        <div className="text-sm text-slate-500 uppercase">Ports Serviced</div>
+                    <div className="grid grid-cols-2 gap-10 py-10 border-y border-white/10">
+                      <div className="space-y-2">
+                        <StatCounter value={region.stats.ports} className="text-4xl font-bold text-white font-serif" />
+                        <div className="text-xs text-white/30 uppercase tracking-[0.2em] font-bold">Ports Serviced</div>
                       </div>
-                      <div className="space-y-1">
-                        <div className="text-2xl font-bold text-white">{region.stats.coverage}</div>
-                        <div className="text-sm text-slate-500 uppercase">Market Coverage</div>
+                      <div className="space-y-2">
+                        <div className="text-4xl font-bold text-white font-serif">{region.stats.coverage}</div>
+                        <div className="text-xs text-white/30 uppercase tracking-[0.2em] font-bold">Market Coverage</div>
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       {region.ports.map((port, i) => (
-                        <div key={i} className="flex items-center gap-3 text-slate-300 bg-slate-800/30 p-3 rounded-lg border border-white/5 hover:bg-slate-800/60 transition-colors">
-                          <MapPin className="w-4 h-4 text-blue-500 flex-shrink-0" />
+                        <div key={i} className="flex items-center gap-4 text-white/60 bg-white/[0.02] backdrop-blur-3xl p-4 rounded-2xl border border-white/5 hover:bg-white/[0.05] hover:text-white transition-all duration-500 group">
+                          <MapPin className="w-5 h-5 text-primary flex-shrink-0 group-hover:scale-110 transition-transform" />
                           <div>
-                            <span className="block font-medium text-sm text-white">{port.name}</span>
-                            <span className="block text-xs text-slate-500">{port.type}</span>
+                            <span className="block font-bold text-sm text-white/80 group-hover:text-white">{port.name}</span>
+                            <span className="block text-[10px] text-white/40 uppercase tracking-widest">{port.type}</span>
                           </div>
                         </div>
                       ))}
                     </div>
                   </div>
 
-                  {/* Image Card */}
+                  {/* Image Card - Cinematic Style */}
                   <div className="flex-1 w-full">
                     <div className="relative group">
-                      <div className={`absolute -inset-1 bg-gradient-to-r ${region.color} rounded-2xl blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200`} />
-                      <div className="relative rounded-2xl overflow-hidden aspect-[4/3] border border-white/10 shadow-2xl">
+                      <div className={`absolute -inset-4 rounded-[2.5rem] blur-3xl opacity-0 group-hover:opacity-20 transition duration-1000`} style={{ backgroundColor: region.glowColor }} />
+                      <div className="relative rounded-[2.5rem] overflow-hidden aspect-[4/3] border border-white/10 shadow-2xl bg-black/50">
                         <img
                           src={region.image}
                           alt={region.name}
-                          className="w-full h-full object-cover transform group-hover:scale-110 transition duration-700"
+                          className="w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-110"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-transparent to-transparent opacity-60" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-transparent to-transparent opacity-60" />
+
+                        {/* Technical Overlay */}
+                        <div className="absolute top-6 right-6 flex flex-col items-end opacity-20 pointer-events-none">
+                          <span className="text-[10px] text-white font-mono uppercase tracking-[0.2em]">Sector: {region.id.toUpperCase()}</span>
+                          <span className="text-[10px] text-white font-mono uppercase tracking-[0.2em]">Auth: SEC-994</span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -255,19 +310,24 @@ const Ports = () => {
           </div>
         </section>
 
-        {/* Tuticorin Primary Hub Special Section */}
-        <section className="relative py-32 bg-slate-950 overflow-hidden">
-          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1548247661-3d7105dd3d4d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')] bg-cover bg-center opacity-10" />
+        {/* Tuticorin Primary Hub Special Section - Darkened with Glow */}
+        <section className="relative py-48 bg-[#020617] overflow-hidden border-t border-white/5">
+          {/* Subtle noise and background glow */}
+          <div className="absolute inset-0 opacity-[0.02] pointer-events-none mix-blend-overlay" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }} />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[160px]" />
 
-          <div className="container mx-auto px-4 relative z-10">
-            <div className="max-w-4xl mx-auto text-center">
-              <Anchor className="w-16 h-16 text-blue-500 mx-auto mb-8" />
-              <h2 className="font-serif text-4xl md:text-6xl font-bold text-white mb-8">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div className="max-w-5xl mx-auto text-center">
+              <div className="w-20 h-20 rounded-2xl bg-primary/20 flex items-center justify-center border border-primary/30 mx-auto mb-10 shadow-2xl">
+                <Anchor className="w-10 h-10 text-primary animate-pulse" />
+              </div>
+              <h2 className="font-serif text-5xl md:text-8xl font-bold text-premium mb-10 text-glow tracking-tighter leading-tight">
                 V.O. Chidambaranar Port<br />
-                <span className="text-blue-500 text-2xl md:text-3xl font-sans font-normal block mt-4 tracking-widest uppercase">The Heart of our Operations</span>
+                <span className="text-white text-3xl md:text-4xl font-serif italic font-light block mt-6 opacity-60">The Heart of our Operations</span>
               </h2>
-              <p className="text-xl text-slate-300 mb-12 leading-relaxed">
-                Strategically located on the southeastern coast of India, Tuticorin serves as our primary gateway, connecting the Indian subcontinent to major global trade routes.
+              <p className="text-xl md:text-3xl text-white/40 mb-20 leading-relaxed font-light italic max-w-4xl mx-auto">
+                Strategically located on the southeastern coast of India, Tuticorin serves as our primary gateway,
+                connecting the Indian subcontinent to major global trade routes.
               </p>
 
               <div className="grid md:grid-cols-3 gap-8 text-left">
@@ -276,9 +336,9 @@ const Ports = () => {
                   { title: 'Warehouse Logistics', desc: 'Over 500,000 sq.ft of bonded warehousing space for seamless cargo storage.' },
                   { title: 'Intermodal Connectivity', desc: 'Direct rail and road links to major industrial hubs across South India.' }
                 ].map((item, i) => (
-                  <div key={i} className="bg-white/5 backdrop-blur-sm p-8 rounded-2xl border border-white/10 hover:border-blue-500/50 transition-colors">
-                    <h4 className="font-serif text-xl font-bold text-white mb-3">{item.title}</h4>
-                    <p className="text-slate-400 leading-relaxed">{item.desc}</p>
+                  <div key={i} className="bg-white/[0.02] backdrop-blur-[50px] p-10 rounded-[2.5rem] border border-white/10 hover:border-primary/50 transition-all duration-700 group">
+                    <h4 className="font-serif text-2xl font-bold text-white mb-4 group-hover:text-premium transition-colors duration-500">{item.title}</h4>
+                    <p className="text-white/40 leading-relaxed font-light group-hover:text-white/60 transition-colors duration-500">{item.desc}</p>
                   </div>
                 ))}
               </div>

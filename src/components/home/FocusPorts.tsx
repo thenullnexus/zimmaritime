@@ -48,7 +48,7 @@ const FocusPorts = () => {
         <div className="max-w-4xl mx-auto text-center mb-20 animate-fade-up">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 mb-6">
             <span className="w-2 h-2 rounded-full bg-primary" />
-            <p className="text-primary font-semibold uppercase tracking-widest text-[10px]">Our Coverage</p>
+            <p className="text-primary font-semibold uppercase tracking-widest text-sm">Our Coverage</p>
           </div>
 
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-8 leading-tight text-glow">
@@ -83,7 +83,7 @@ const FocusPorts = () => {
                 <div className="glass-morphism px-3 py-1 rounded-full border border-white/20">
                   <div className="flex items-center gap-2">
                     <MapPin className="w-3 h-3 text-primary animate-bounce" />
-                    <span className="text-[10px] font-bold text-white uppercase tracking-tighter">
+                    <span className="text-xs font-bold text-white uppercase tracking-tighter">
                       {region.highlight}
                     </span>
                   </div>
@@ -102,7 +102,7 @@ const FocusPorts = () => {
                     {region.ports.slice(0, 4).map((port) => (
                       <span
                         key={port}
-                        className="text-[10px] bg-white/10 backdrop-blur-sm text-white/90 px-2 py-1 rounded-md border border-white/10 uppercase font-medium tracking-wider"
+                        className="text-xs bg-white/10 backdrop-blur-sm text-white/90 px-2 py-1 rounded-md border border-white/10 uppercase font-medium tracking-wider"
                       >
                         {port}
                       </span>

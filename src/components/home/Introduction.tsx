@@ -38,7 +38,7 @@ const StatCard = ({ stat, index }: { stat: any, index: number }) => {
                     <span className="text-5xl font-bold bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">
                         {count}{stat.value.includes('+') ? '+' : ''}
                     </span>
-                    <span className="text-sm font-medium text-primary uppercase tracking-widest">
+                    <span className="text-base font-medium text-primary uppercase tracking-widest">
                         {stat.unit}
                     </span>
                 </div>
@@ -105,7 +105,7 @@ const Introduction = () => {
                             className="flex items-center gap-3 mb-8"
                         >
                             <div className="h-[1px] w-12 bg-primary/50" />
-                            <span className="text-primary font-bold text-xs uppercase tracking-[0.4em]">About ZIM Maritime</span>
+                            <span className="text-primary font-bold text-sm uppercase tracking-[0.4em]">About ZIM Maritime</span>
                         </motion.div>
 
                         <h2 className="font-serif text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-10 leading-[0.9] tracking-tighter">
@@ -176,7 +176,7 @@ const Introduction = () => {
                             <div className="w-12 h-12 rounded-2xl bg-primary/20 backdrop-blur-md flex items-center justify-center border border-primary/30">
                                 <Box className="w-6 h-6 text-primary" />
                             </div>
-                            <span className="text-primary font-bold tracking-[0.2em] uppercase text-xs">Vessel Expertise Spotlight</span>
+                            <span className="text-primary font-bold tracking-[0.2em] uppercase text-sm">Vessel Expertise Spotlight</span>
                         </div>
 
                         <h3 className="font-serif text-3xl md:text-5xl font-bold text-white mb-8 leading-tight">
@@ -193,12 +193,12 @@ const Introduction = () => {
                         <div className="flex flex-col sm:flex-row gap-8 py-8 border-t border-white/10">
                             <div className="flex-1">
                                 <div className="text-3xl font-bold text-white mb-2">2,000 - 4,000</div>
-                                <div className="text-xs text-white/40 uppercase tracking-[0.3em]">DWT Capabilities</div>
+                                <div className="text-sm text-white/40 uppercase tracking-[0.3em]">DWT Capabilities</div>
                             </div>
                             <div className="hidden sm:block w-[1px] bg-white/10" />
                             <div className="flex-1">
                                 <div className="text-3xl font-bold text-white mb-2">Global</div>
-                                <div className="text-xs text-white/40 uppercase tracking-[0.3em]">Operational Reach</div>
+                                <div className="text-sm text-white/40 uppercase tracking-[0.3em]">Operational Reach</div>
                             </div>
                         </div>
                     </div>

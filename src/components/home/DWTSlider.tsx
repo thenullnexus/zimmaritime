@@ -73,7 +73,7 @@ const DWTSlider = ({ delay = 0 }: DWTSliderProps) => {
                     <span className="text-4xl font-bold text-primary tabular-nums">
                         {formattedDWT}
                     </span>
-                    <span className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
+                    <span className="text-base font-medium text-muted-foreground uppercase tracking-wider">
                         DWT
                     </span>
                 </div>
@@ -89,7 +89,7 @@ const DWTSlider = ({ delay = 0 }: DWTSliderProps) => {
                         onChange={(e) => setDwt(Number(e.target.value))}
                         className="dwt-slider w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer accent-primary"
                     />
-                    <div className="flex justify-between text-[10px] text-muted-foreground mt-2 uppercase tracking-wider">
+                    <div className="flex justify-between text-xs text-muted-foreground mt-2 uppercase tracking-wider">
                         <span>2k</span>
                         <span>60k</span>
                     </div>

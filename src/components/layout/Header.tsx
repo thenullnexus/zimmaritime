@@ -41,16 +41,16 @@ const Header = () => {
           <Link to="/" className="flex-shrink-0 group relative">
             {/* Background Glow - Ultra Bright */}
             <div className={`absolute inset-[-15%] blur-[50px] rounded-full transition-all duration-700 ${isScrolled
-                ? 'bg-blue-400 opacity-40 group-hover:opacity-100'
-                : 'bg-white opacity-50 group-hover:opacity-100'
+              ? 'bg-blue-400 opacity-40 group-hover:opacity-100'
+              : 'bg-white opacity-50 group-hover:opacity-100'
               }`} />
 
             <img
               src={logo}
               alt="ZIM Maritime"
               className={`h-14 lg:h-28 w-auto relative z-10 transition-all duration-500 transform group-hover:scale-110 brightness-110 group-hover:brightness-150 ${isScrolled
-                  ? 'drop-shadow-[0_0_15px_rgba(0,190,255,0.7)] drop-shadow-[0_0_30px_rgba(0,190,255,0.5)] group-hover:drop-shadow-[0_0_45px_rgba(0,190,255,1)]'
-                  : 'drop-shadow-[0_0_15px_rgba(255,255,255,0.8)] drop-shadow-[0_0_30px_rgba(255,255,255,0.6)] group-hover:drop-shadow-[0_0_45px_rgba(255,255,255,1)]'
+                ? 'drop-shadow-[0_0_15px_rgba(0,190,255,0.7)] drop-shadow-[0_0_30px_rgba(0,190,255,0.5)] group-hover:drop-shadow-[0_0_45px_rgba(0,190,255,1)]'
+                : 'drop-shadow-[0_0_15px_rgba(255,255,255,0.8)] drop-shadow-[0_0_30px_rgba(255,255,255,0.6)] group-hover:drop-shadow-[0_0_45px_rgba(255,255,255,1)]'
                 }`}
             />
           </Link>

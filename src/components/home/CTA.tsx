@@ -22,7 +22,7 @@ const CTA = () => {
             <div className="relative z-10">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/20 mb-8 animate-fade-up">
                 <span className="w-2 h-2 rounded-full bg-primary animate-ping" />
-                <p className="text-primary font-bold uppercase tracking-[0.2em] text-[10px]">Direct Channel</p>
+                <p className="text-primary font-bold uppercase tracking-[0.2em] text-xs">Direct Channel</p>
               </div>
 
               <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-8 leading-[1.1] text-glow animate-fade-up stagger-1">
@@ -62,7 +62,7 @@ const CTA = () => {
                     <Phone className="w-5 h-5" />
                   </div>
                   <div className="text-left">
-                    <p className="text-[10px] text-white/40 uppercase tracking-widest font-bold">24/7 Operations</p>
+                    <p className="text-xs text-white/40 uppercase tracking-widest font-bold">24/7 Operations</p>
                     <a href="tel:+914412345678" className="text-lg text-white font-semibold hover:text-primary transition-colors">+91 44 1234 5678</a>
                   </div>
                 </div>
@@ -72,7 +72,7 @@ const CTA = () => {
                     <Mail className="w-5 h-5" />
                   </div>
                   <div className="text-left">
-                    <p className="text-[10px] text-white/40 uppercase tracking-widest font-bold">Inquiries</p>
+                    <p className="text-xs text-white/40 uppercase tracking-widest font-bold">Inquiries</p>
                     <a href="mailto:chartering@zimmaritime.com" className="text-lg text-white font-semibold hover:text-primary transition-colors">chartering@zimmaritime.com</a>
                   </div>
                 </div>

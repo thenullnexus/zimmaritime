@@ -13,11 +13,11 @@ import {
 
 // Import Service Images
 import vesselFixingImg from '../../assets/vessel-fixing.png';
-import shipCharteringImg from '../../assets/ship-chartering.png';
+import shipCharteringImg from '../../assets/cha-stevedoring.png';
 import shipBrokeringImg from '../../assets/ship-brokering.png';
 import portLogisticsImg from '../../assets/port-logistics.png';
 import surfaceTransportationImg from '../../assets/surface-transportation.png';
-import chaStevedoringImg from '../../assets/cha-stevedoring.png';
+import chaStevedoringImg from '../../assets/chs-steve.png';
 
 const Services = () => {
   const services = [
@@ -93,7 +93,7 @@ const Services = () => {
             className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 backdrop-blur-3xl border border-white/10 rounded-full mb-8"
           >
             <Sparkles className="w-4 h-4 text-primary animate-pulse" />
-            <span className="text-white/60 font-serif italic text-sm tracking-widest uppercase">Expert Solutions</span>
+            <span className="text-white/60 font-serif italic text-base tracking-widest uppercase">Expert Solutions</span>
           </motion.div>
 
           <motion.h2
@@ -155,19 +155,16 @@ const Services = () => {
                     {service.description}
                   </p>
 
-                  <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-6 mt-auto">
+                  <div className="flex items-center mt-auto">
                     <Link
                       to="/services"
-                      className="inline-flex items-center gap-3 text-white/30 font-bold text-xs uppercase tracking-[0.3em] hover:text-white transition-all duration-300 group/link"
+                      className="group/btn relative inline-flex items-center gap-4 px-8 py-4 bg-white/5 border border-white/10 text-white rounded-xl text-sm font-bold uppercase tracking-[0.3em] overflow-hidden transition-all hover:bg-primary hover:border-primary hover:shadow-[0_0_30px_rgba(1,78,34,0.3)] shadow-xl"
                     >
-                      View Details
-                      <ArrowRight className="w-4 h-4 group-hover/link:translate-x-2 transition-transform" />
-                    </Link>
-                    <Link
-                      to="/contact"
-                      className="px-8 py-3 bg-primary text-white text-xs font-bold uppercase tracking-[0.2em] rounded-full hover:bg-white hover:text-primary transition-all duration-500 text-center shadow-[0_0_20px_rgba(1,78,34,0.3)]"
-                    >
-                      Get Quote
+                      <span className="relative z-10 flex items-center gap-3">
+                        View Details
+                        <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-2 transition-transform duration-500" />
+                      </span>
+                      <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-1000" />
                     </Link>
                   </div>
                 </div>

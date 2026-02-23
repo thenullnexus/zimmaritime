@@ -77,7 +77,7 @@ const LiveRadar = ({ delay = 0 }: LiveRadarProps) => {
                     <span className="text-4xl font-bold text-primary tabular-nums">
                         24/7
                     </span>
-                    <span className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
+                    <span className="text-base font-medium text-muted-foreground uppercase tracking-wider">
                         Support
                     </span>
                 </div>
@@ -85,7 +85,7 @@ const LiveRadar = ({ delay = 0 }: LiveRadarProps) => {
                 {/* Live System Status */}
                 <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 mt-auto">
                     <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                    <span className="text-[10px] font-mono text-primary font-medium uppercase tracking-wider">
+                    <span className="text-xs font-mono text-primary font-medium uppercase tracking-wider">
                         System Active: UTC {time}
                     </span>
                 </div>

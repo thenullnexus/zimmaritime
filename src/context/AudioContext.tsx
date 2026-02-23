@@ -17,17 +17,42 @@ export const useAudio = () => {
 };
 
 export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
-    const [isPlaying, setIsPlaying] = useState(false);
+    const [isPlaying, setIsPlaying] = useState(true);
     const audioRef = useRef<HTMLAudioElement | null>(null);
+    const hasInteractedRef = useRef(false);
 
     useEffect(() => {
         audioRef.current = new Audio(waveSound);
         audioRef.current.loop = true;
-        audioRef.current.volume = 0.4; // Set a subtle ambient volume
+        audioRef.current.volume = 0.4;
+
+        const handleInteraction = () => {
+            if (!hasInteractedRef.current && isPlaying) {
+                const playPromise = audioRef.current?.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        hasInteractedRef.current = true;
+                        // Successfully started, can remove listeners
+                        window.removeEventListener('click', handleInteraction);
+                        window.removeEventListener('scroll', handleInteraction);
+                        window.removeEventListener('touchstart', handleInteraction);
+                    }).catch((error) => {
+                        console.warn("Autoplay still blocked or failed:", error);
+                    });
+                }
+            }
+        };
+
+        window.addEventListener('click', handleInteraction);
+        window.addEventListener('scroll', handleInteraction);
+        window.addEventListener('touchstart', handleInteraction);
 
         return () => {
             audioRef.current?.pause();
             audioRef.current = null;
+            window.removeEventListener('click', handleInteraction);
+            window.removeEventListener('scroll', handleInteraction);
+            window.removeEventListener('touchstart', handleInteraction);
         };
     }, []);
 
@@ -36,8 +61,8 @@ export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
             const playPromise = audioRef.current?.play();
             if (playPromise !== undefined) {
                 playPromise.catch((error) => {
-                    console.error("Audio playback failed:", error);
-                    setIsPlaying(false);
+                    // This is expected if user hasn't interacted yet
+                    console.log("Audio waiting for user interaction...");
                 });
             }
         } else {

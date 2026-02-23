@@ -89,7 +89,7 @@ const TrustTimeline = ({ delay = 0 }: TrustTimelineProps) => {
                     <span className="text-4xl font-bold text-primary tabular-nums">
                         {yearsOfService}
                     </span>
-                    <span className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
+                    <span className="text-base font-medium text-muted-foreground uppercase tracking-wider">
                         Years
                     </span>
                 </div>
