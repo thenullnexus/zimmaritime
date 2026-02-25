@@ -10,21 +10,24 @@ const ContactInfoModule = ({ icon: Icon, title, content, index }: { icon: any, t
     whileInView={{ opacity: 1, y: 0 }}
     transition={{ delay: index * 0.1, duration: 0.6 }}
     viewport={{ once: true }}
-    className="group relative bg-white/[0.02] border border-white/5 p-10 rounded-sm hover:border-primary/40 transition-all duration-500"
+    className="group relative bg-[#ffffff]/[0.02] border border-white/5 p-6 md:p-8 rounded-2xl hover:border-primary/40 transition-all duration-500 hover:bg-white/[0.04] h-full overflow-hidden"
   >
-    <div className="flex items-start gap-8">
-      <div className="w-14 h-14 bg-white/5 flex items-center justify-center border border-white/10 group-hover:border-primary/40 transition-colors">
-        <Icon className="w-6 h-6 text-primary" />
+    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 sm:gap-6 relative z-10">
+      <div className="w-12 h-12 md:w-14 md:h-14 bg-primary/10 flex items-center justify-center rounded-2xl border border-primary/20 group-hover:border-primary/50 transition-all duration-500 shadow-lg shadow-primary/5 flex-shrink-0">
+        <Icon className="w-5 h-5 md:w-6 md:h-6 text-primary group-hover:scale-110 transition-transform" strokeWidth={1.5} />
       </div>
-      <div>
-        <span className="block text-xs font-black text-primary/40 uppercase tracking-[0.4em] mb-3">Technical Info</span>
-        <h4 className="font-sans text-2xl font-black text-white uppercase tracking-wider mb-3">{title}</h4>
-        <div className="text-white/50 text-lg leading-relaxed font-light italic">
+      <div className="flex-1 min-w-0">
+        <span className="block text-[9px] md:text-[10px] font-bold text-primary/60 uppercase tracking-[0.4em] mb-1">Technical Info</span>
+        <h4 className="font-serif text-lg md:text-xl font-bold text-white tracking-tight mb-2 break-words">{title}</h4>
+        <div className="text-white/50 text-sm md:text-base leading-relaxed font-light italic break-words overflow-hidden">
           {content}
         </div>
       </div>
     </div>
-    <div className="absolute bottom-0 left-0 w-0 h-[1px] bg-primary group-hover:w-full transition-all duration-500" />
+    {/* Large watermark icon - absolute but constrained */}
+    <div className="absolute -bottom-2 -right-2 opacity-[0.02] group-hover:opacity-10 transition-opacity pointer-events-none">
+      <Icon className="w-16 h-16 md:w-20 md:h-20 text-white" />
+    </div>
   </motion.div>
 );
 
@@ -184,11 +187,19 @@ const Contact = () => {
                 icon={MapPin}
                 title="Global HQ"
                 content={
-                  <p>
-                    123 Marina Bay Road,<br />
-                    Chennai 600001,<br />
-                    Tamil Nadu, India
-                  </p>
+                  <div className="flex flex-col gap-1.5 not-italic">
+                    <p className="flex items-center gap-2">
+                      <ArrowRight className="w-3 h-3 text-primary" />
+                      123 Marina Bay Road
+                    </p>
+                    <p className="flex items-center gap-2">
+                      <ArrowRight className="w-3 h-3 text-primary" />
+                      Chennai 600001
+                    </p>
+                    <p className="flex items-center gap-2 text-white/30 text-xs mt-1">
+                      Tamil Nadu, India
+                    </p>
+                  </div>
                 }
                 index={0}
               />
@@ -196,7 +207,7 @@ const Contact = () => {
                 icon={Phone}
                 title="Direct Comms"
                 content={
-                  <div className="flex flex-col gap-2">
+                  <div className="flex flex-col gap-2 not-italic">
                     <a href="tel:+914412345678" className="hover:text-primary transition-colors flex items-center gap-2">
                       <ArrowRight className="w-3 h-3 text-primary" />
                       +91 44 1234 5678
@@ -213,7 +224,7 @@ const Contact = () => {
                 icon={Mail}
                 title="Digital Uplink"
                 content={
-                  <div className="flex flex-col gap-2">
+                  <div className="flex flex-col gap-2 not-italic">
                     <a href="mailto:chartering@zimmaritime.com" className="hover:text-primary transition-colors flex items-center gap-2">
                       <ArrowRight className="w-3 h-3 text-primary" />
                       chartering@zimmaritime.com
@@ -230,11 +241,14 @@ const Contact = () => {
                 icon={Clock}
                 title="Status"
                 content={
-                  <div className="leading-relaxed space-y-2">
-                    <span className="block">Mon-Fri 09:00-18:00 IST</span>
-                    <span className="text-primary font-bold flex items-center gap-3 uppercase tracking-[0.2em] text-xs">
+                  <div className="leading-relaxed space-y-2 not-italic">
+                    <span className="flex items-center gap-2">
+                      <ArrowRight className="w-3 h-3 text-primary" />
+                      Mon-Fri 09:00-18:00 IST
+                    </span>
+                    <span className="text-primary font-bold flex items-center gap-2 uppercase tracking-[0.2em] text-[10px]">
                       <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                      24/7 Active
+                      24/7 Active Bridge
                     </span>
                   </div>
                 }
