@@ -133,7 +133,7 @@ const FeatureItem = ({ feature, index, scrollProgress }: { feature: string, inde
       <div className="w-5 h-5 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0 border border-primary/20">
         <Check className="w-2.5 h-2.5 text-primary" />
       </div>
-      <span className="text-white/70 text-xs sm:text-base font-light group-hover:text-white transition-colors duration-300">
+      <span className="text-white/70 text-sm sm:text-base font-light group-hover:text-white transition-colors duration-300">
         {feature}
       </span>
     </motion.li>
@@ -154,22 +154,23 @@ const ParallaxServiceSection = ({ service, isMobile }: { service: any, isMobile:
   });
 
   // Sequenced Animation Logic
-  // 1. Heading entry: 0.0 -> 0.2
-  const headingStep = useTransform(smoothProgress, [0, 0.2], [0, 1]);
-  const headingEntryY = useTransform(smoothProgress, [0, 0.2], [50, 0]);
+  // 1. Heading entry: 0.0 -> 0.3
+  const headingStep = useTransform(smoothProgress, [0, 0.25], [0, 1]);
+  const headingEntryX = useTransform(smoothProgress, [0, 0.3], [-100, 0]);
+  const headingEntryY = useTransform(smoothProgress, [0, 0.3], [20, 0]);
   const headingOpacity = headingStep;
 
-  // 2. Image entry: 0.1 -> 0.4
-  const imageStep = useTransform(smoothProgress, [0.1, 0.4], [0, 1]);
-  const imageEntryX = useTransform(smoothProgress, [0.1, 0.4], [100, 0]);
+  // 2. Image entry: 0.05 -> 0.35
+  const imageStep = useTransform(smoothProgress, [0.05, 0.35], [0, 1]);
+  const imageEntryX = useTransform(smoothProgress, [0.05, 0.35], [100, 0]);
 
-  // 3. Content entry: 0.3 -> 0.6
-  const contentStep = useTransform(smoothProgress, [0.3, 0.6], [0, 1]);
-  const contentEntryX = useTransform(smoothProgress, [0.3, 0.6], [-100, 0]);
+  // 3. Content entry: 0.1 -> 0.4
+  const contentStep = useTransform(smoothProgress, [0.1, 0.4], [0, 1]);
+  const contentEntryX = useTransform(smoothProgress, [0.1, 0.4], [-100, 0]);
 
-  // Exit animation (starts at 0.85, ends at 1.0)
-  const exitOpacity = useTransform(smoothProgress, [0.85, 1], [1, 0]);
-  const exitY = useTransform(smoothProgress, [0.85, 1], [0, -100]);
+  // Exit animation (removed to keep sections visible)
+  // const exitOpacity = useTransform(smoothProgress, [0.75, 1], [1, 0]);
+  // const exitY = useTransform(smoothProgress, [0.75, 1], [0, -100]);
 
   // Background Depth effects
   const bgMarkerSpeed = useTransform(smoothProgress, [0, 1], [0, 100]);
@@ -177,8 +178,22 @@ const ParallaxServiceSection = ({ service, isMobile }: { service: any, isMobile:
 
   const Icon = service.icon;
 
+  // Pre-calculate motion values for both layouts to avoid hook violation
+  const mobileImageY = useTransform(smoothProgress, [0.1, 0.4], [40, 0]);
+  const desktopImageX = useTransform(imageEntryX, x => `${x}%`);
+  const desktopContentX = useTransform(contentEntryX, (x: any) => `${x}vw`);
+  const desktopHeadingBgOpacity = useTransform(headingOpacity, (o: any) => 0.03 + (Number(o) * 0.05));
+  const desktopHeadingBgY = useTransform(headingEntryY, (y: any) => `${y}vh`);
+  const desktopHeadingBgX = useTransform(headingEntryX, (x: any) => `${x}vw`);
+  const desktopQuoteOpacity = useTransform(contentStep, [0.6, 1], [0, 1]);
+  const desktopQuoteY = useTransform(contentStep, [0.6, 1], [20, 0]);
+
+  // Mobile-specific transformations moved to top level
+  const mobileHeadingOpacity = useTransform(headingOpacity, (o: any) => Number(o) * 0.12);
+  const mobileHeadingY = useTransform(headingEntryY, (y: any) => `${y}px`);
+
   return (
-    <div id={service.id} ref={sectionRef} className="relative bg-[#020617] will-change-transform" style={{ height: isMobile ? '200vh' : '300vh' }}>
+    <div id={service.id} ref={sectionRef} className="relative bg-[#020617] will-change-transform" style={{ height: isMobile ? '120vh' : '180vh' }}>
       <div className="sticky top-0 h-screen overflow-hidden will-change-contents">
         {/* Cinematic Background Layering */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
@@ -203,82 +218,97 @@ const ParallaxServiceSection = ({ service, isMobile }: { service: any, isMobile:
 
         <motion.div
           className="relative w-full h-full"
-          style={{
-            opacity: exitOpacity,
-            y: exitY
-          }}
         >
           {/* MOBILE LAYOUT: Stacked vertically */}
           {isMobile ? (
-            <div className="flex flex-col h-full pt-16 px-4">
-              {/* Mobile Image */}
+            <div className="flex flex-col h-full pt-8 px-4 relative">
+              {/* Background Title for Mobile - Enhanced Visibility */}
               <motion.div
-                className="flex-shrink-0 flex items-center justify-center mb-4 pt-10"
+                className="absolute inset-0 flex items-start justify-center pt-20 pointer-events-none z-0"
                 style={{
-                  opacity: imageStep,
-                  y: useTransform(smoothProgress, [0.1, 0.4], [40, 0]),
+                  opacity: mobileHeadingOpacity,
+                  y: mobileHeadingY,
                 }}
               >
-                <div className="w-48 aspect-square rounded-2xl overflow-hidden drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)]">
+                <h2 className="font-serif font-black uppercase tracking-tighter text-white text-[18vw] text-center leading-[0.8] opacity-60">
+                  {service.title}
+                </h2>
+              </motion.div>
+
+              {/* Mobile Image - Optimized Size */}
+              <motion.div
+                className="relative z-10 flex-shrink-0 flex items-center justify-center mb-0 pt-4"
+                style={{
+                  opacity: imageStep,
+                  y: mobileImageY,
+                }}
+              >
+                <div className="w-44 aspect-square rounded-[2rem] overflow-hidden drop-shadow-[0_15px_40px_rgba(0,0,0,0.9)]">
                   <img
                     src={service.image}
                     alt={service.title}
-                    className="w-full h-full object-contain bg-black/50"
+                    className="w-full h-full object-contain bg-black/40"
                   />
+                  {/* Glass highlight on image */}
+                  <div className="absolute inset-0 bg-gradient-to-tr from-white/10 via-transparent to-transparent opacity-40 pointer-events-none" />
                 </div>
               </motion.div>
 
-              {/* Mobile Content Card */}
+              {/* Mobile Content Card - Enhanced Premium Feel */}
               <motion.div
-                className="flex-1 overflow-y-auto pointer-events-auto"
+                className="relative z-20 pointer-events-auto -mt-4"
                 style={{ opacity: contentStep }}
               >
                 <div
-                  className="bg-white/[0.02] backdrop-blur-[50px] border border-white/10 py-5 px-5 rounded-[1.5rem] shadow-2xl relative overflow-hidden"
+                  className="bg-[#0a0f1e]/40 backdrop-blur-[60px] border border-white/20 py-5 px-6 rounded-[2rem] shadow-2xl relative overflow-hidden mx-auto max-w-[360px]"
                   style={{
-                    boxShadow: `0 20px 60px -10px rgba(0,0,0,0.6), 0 0 30px -8px ${service.glowColor}, inset 0 0 20px rgba(255,255,255,0.02)`
+                    boxShadow: `0 25px 60px -15px rgba(0,0,0,0.8), 0 0 30px -10px ${service.glowColor}, inset 0 0 30px rgba(255,255,255,0.03)`
                   }}
                 >
                   {/* Card overlays */}
-                  <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px]" />
+                  <div className="absolute inset-0 opacity-[0.05] pointer-events-none bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:24px_24px]" />
+                  <div className="absolute inset-0 bg-gradient-to-b from-white/[0.05] to-transparent opacity-50 pointer-events-none" />
 
                   {/* Icon + Title */}
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center border border-primary/30 shadow-lg flex-shrink-0">
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="w-11 h-11 rounded-xl bg-primary/20 flex items-center justify-center border border-primary/40 shadow-xl flex-shrink-0">
                       <Icon className="w-5 h-5 text-primary" strokeWidth={1.5} />
                     </div>
-                    <div>
-                      <span className="text-primary font-bold uppercase tracking-[0.2em] text-xs flex items-center gap-1.5">
+                    <div className="flex flex-col">
+                      <span className="text-primary font-bold uppercase tracking-[0.25em] text-[9px] flex items-center gap-2 mb-0.5">
                         <Sparkles className="w-2.5 h-2.5 animate-pulse" />
-                        Premium Logistics
+                        Premium Solutions
                       </span>
-                      <span className="text-white font-serif italic text-sm opacity-80">Strategic Excellence</span>
+                      <h3 className="text-2xl font-serif font-bold text-white leading-tight tracking-tight text-balance">
+                        {service.title}
+                      </h3>
                     </div>
                   </div>
 
-                  <p className="text-white/80 text-sm mb-4 leading-relaxed font-light italic">
+                  <p className="text-white/90 text-sm mb-4 leading-relaxed font-light italic">
                     {service.description}
                   </p>
 
-                  <div className="w-full h-[1px] bg-gradient-to-r from-primary/40 via-white/10 to-transparent mb-4" />
+                  <div className="w-full h-[1px] bg-gradient-to-r from-primary/60 via-white/20 to-transparent mb-4 opacity-50" />
 
                   <ul className="grid grid-cols-1 gap-2 mb-5">
-                    {service.features.map((feature: string, idx: number) => (
+                    {service.features.slice(0, 4).map((feature: string, idx: number) => (
                       <li key={idx} className="flex items-center gap-3">
-                        <div className="w-4 h-4 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0 border border-primary/20">
-                          <Check className="w-2 h-2 text-primary" />
+                        <div className="w-4 h-4 rounded-md bg-primary/20 flex items-center justify-center flex-shrink-0 border border-primary/30">
+                          <Check className="w-2.5 h-2.5 text-primary" />
                         </div>
-                        <span className="text-white/70 text-xs font-light">{feature}</span>
+                        <span className="text-white/80 text-[13px] font-light">{feature}</span>
                       </li>
                     ))}
                   </ul>
 
                   <Link
                     to="/contact"
-                    className="group relative inline-flex items-center gap-3 px-6 py-3 bg-primary text-white rounded-full text-xs font-bold overflow-hidden transition-all hover:scale-105 shadow-lg shadow-primary/20"
+                    className="group relative inline-flex items-center gap-3 px-7 py-3.5 bg-primary text-white rounded-full text-xs font-bold overflow-hidden transition-all hover:scale-105 active:scale-95 shadow-xl shadow-primary/30 w-full justify-center"
                   >
-                    <span className="relative z-10">Request Quote</span>
+                    <span className="relative z-10">Request Strategic Quote</span>
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
                   </Link>
                 </div>
               </motion.div>
@@ -290,7 +320,7 @@ const ParallaxServiceSection = ({ service, isMobile }: { service: any, isMobile:
               <motion.div
                 className="absolute inset-0 flex items-end justify-end pr-20 pb-20 pointer-events-none"
                 style={{
-                  x: useTransform(imageEntryX, x => `${x}%`),
+                  x: desktopImageX,
                   zIndex: 30
                 }}
               >
@@ -317,18 +347,19 @@ const ParallaxServiceSection = ({ service, isMobile }: { service: any, isMobile:
                 className="absolute inset-0 flex items-center justify-start pointer-events-none z-40"
                 style={{
                   paddingLeft: '8vw',
-                  x: useTransform(contentEntryX, x => `${x}vw`),
+                  x: desktopContentX,
                 }}
               >
                 <div className="flex flex-col items-start px-12 text-left">
                   <motion.h2
-                    className="font-serif font-black uppercase tracking-tighter whitespace-nowrap text-white select-none pointer-events-none"
+                    className="font-serif font-black uppercase tracking-tighter text-white select-none pointer-events-none"
                     style={{
-                      fontSize: 'clamp(2.5rem, 10vw, 15rem)',
-                      lineHeight: '0.8',
-                      opacity: useTransform(headingOpacity, (o: any) => 0.03 + (Number(o) * 0.05)),
+                      fontSize: 'clamp(2.5rem, 8vw, 12rem)',
+                      lineHeight: '0.85',
+                      opacity: desktopHeadingBgOpacity,
                       textShadow: '0 0 120px rgba(1, 78, 34, 0.4)',
-                      y: useTransform(headingEntryY, y => `${y}vh`),
+                      y: desktopHeadingBgY,
+                      x: desktopHeadingBgX,
                       transformOrigin: 'center center',
                       willChange: 'transform, opacity',
                     }}
@@ -389,8 +420,8 @@ const ParallaxServiceSection = ({ service, isMobile }: { service: any, isMobile:
                     </ul>
 
                     <motion.div style={{
-                      opacity: useTransform(contentStep, [0.6, 1], [0, 1]),
-                      y: useTransform(contentStep, [0.6, 1], [20, 0]),
+                      opacity: desktopQuoteOpacity,
+                      y: desktopQuoteY,
                     }}>
                       <Link
                         to="/contact"
@@ -444,7 +475,7 @@ const ServicesPage = () => {
               <p className="text-primary font-bold uppercase tracking-[0.5em] text-sm">Our Enterprise Solutions</p>
             </motion.div>
 
-            <h1 className="font-serif text-6xl md:text-8xl font-bold text-premium text-glow mb-10 leading-[0.85] tracking-tighter">
+            <h1 className="font-serif text-5xl md:text-8xl font-bold text-premium text-glow mb-6 md:mb-10 leading-[0.9] md:leading-[0.85] tracking-tighter">
               World-Class <br />
               <span className="text-white">Maritime Logistics</span>
             </h1>
