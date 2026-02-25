@@ -314,14 +314,14 @@ const ParallaxServiceSection = ({ service, isMobile }: { service: any, isMobile:
             <>
               {/* Image Segment (Right Side) */}
               <motion.div
-                className="absolute inset-0 flex items-center justify-end pr-10 xl:pr-20 pointer-events-none"
+                className="absolute inset-0 flex items-center justify-end pr-6 xl:pr-12 pointer-events-none"
                 style={{
                   x: desktopImageX,
                   zIndex: 30
                 }}
               >
                 <div className="relative group/img flex items-center justify-center">
-                  <div className="w-[28vw] aspect-[16/10] rounded-3xl overflow-hidden drop-shadow-[0_40px_100px_rgba(0,0,0,0.9)] border border-white/5 bg-[#0a0f1e]/40 backdrop-blur-3xl">
+                  <div className="w-[24vw] aspect-[3/4] rounded-3xl overflow-hidden drop-shadow-[0_40px_100px_rgba(0,0,0,0.9)] border border-white/5 bg-[#0a0f1e]/40 backdrop-blur-3xl">
                     <img
                       src={service.image}
                       alt={service.title}
@@ -340,7 +340,7 @@ const ParallaxServiceSection = ({ service, isMobile }: { service: any, isMobile:
                   x: desktopContentX,
                 }}
               >
-                <div className="flex flex-col items-start text-left w-full max-w-4xl">
+                <div className="flex flex-col items-start text-left w-full max-w-3xl">
                   {/* Background Title Overlay */}
                   <motion.h2
                     className="font-serif font-black uppercase tracking-tighter text-white select-none pointer-events-none mb-6"
@@ -376,9 +376,9 @@ const ParallaxServiceSection = ({ service, isMobile }: { service: any, isMobile:
                       <div className="absolute top-2 right-2 w-[1px] h-10 bg-primary/30" />
                     </div>
 
-                    <div className="flex flex-col xl:flex-row gap-10 items-center">
+                    <div className="flex flex-col xl:flex-row gap-6 items-center">
                       {/* Left: Icon + Description */}
-                      <div className="flex-1 flex flex-col items-start text-left max-w-xl">
+                      <div className="flex-1 flex flex-col items-start text-left max-w-md">
                         <div className="flex items-center gap-5 mb-5">
                           <div className="w-14 h-14 rounded-2xl bg-primary/20 flex items-center justify-center border border-primary/30 shadow-lg shrink-0">
                             <Icon className="w-7 h-7 text-primary" strokeWidth={1.5} />
@@ -409,7 +409,7 @@ const ParallaxServiceSection = ({ service, isMobile }: { service: any, isMobile:
                       </div>
 
                       {/* Right: Features Grid */}
-                      <div className="w-full xl:w-[340px] bg-white/5 p-8 rounded-[2.5rem] border border-white/10 backdrop-blur-md">
+                      <div className="w-full xl:w-[280px] bg-white/5 p-8 rounded-[2.5rem] border border-white/10 backdrop-blur-md">
                         <h4 className="text-[11px] text-primary/60 font-black uppercase tracking-[0.4em] mb-5">Tactical Benefits</h4>
                         <ul className="grid grid-cols-1 gap-4">
                           {service.features.map((feature: string, idx: number) => (
