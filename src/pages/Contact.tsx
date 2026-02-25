@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { MapPin, Phone, Mail, Clock, Send, Ship, Anchor, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
+import contactHeroImg from '@/assets/maritime-contact-dry-bulk.png';
 
 const ContactInfoModule = ({ icon: Icon, title, content, index }: { icon: any, title: string, content: React.ReactNode, index: number }) => (
   <motion.div
@@ -59,7 +60,7 @@ const Contact = () => {
           {/* Background Image with Overlay */}
           <div className="absolute inset-0">
             <img
-              src="/src/assets/maritime-contact-dry-bulk.png"
+              src={contactHeroImg}
               alt="Dry Bulk Vessel Background"
               className="w-full h-full object-cover"
             />
